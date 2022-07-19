@@ -98,6 +98,7 @@ def openProgram(program_name):
         return
 
     pg.press("Win")
+    time.sleep(1)
     pg.write(program_name)
     time.sleep(1)
     pg.keyDown("enter")
@@ -126,24 +127,25 @@ def runQueries():
         if "jarvis" not in query and "alexa" not in query:
             continue
 
-        if "hello alexa" in query:
+        if "alexa" in query:
             engine.setProperty("voice", voices[1].id)
-            query = query.replace("hello alexa", "")
+            if "hello jarvis" in query:
+                speak("hello Sir! This is Alexa.")
+                query.replace("hello ","")
+            query = query.replace("alexa", "")
 
-        elif "hello jarvis" in query:
+        elif "jarvis" in query:
             engine.setProperty("voice", voices[0].id)
-            query = query.replace("hello jarvis", "")
-
-        if query.startswith("jarvis"):
-            query.replace("jarvis", "")
-
-        elif query.startswith("alexa"):
-            query.replace("alexa","")
+            if "hello jarvis" in query:
+                speak("hello Sir! This is Jarvis.")
+                query.replace("hello ","")
+            query = query.replace("jarvis", "")
 
         if "great me" in query or "wish me" in query:
             wishMe()
 
         elif "open" in query:
+            # print(query)
             openProgram(query)  # opening command using pyautogui
 
         elif "wikipedia" in query:
@@ -154,7 +156,7 @@ def runQueries():
 
         elif "play" in query:
             query = query.replace("play ", "")
-            print(query)
+            # print(query)
             func.playMusicOnYoutube(query)
 
         elif "screenshot" in query:
