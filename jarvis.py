@@ -7,10 +7,12 @@ import pyttsx3
 import speech_recognition as sr
 import pyautogui as pg
 import wikipedia
+import functions as func
 
 engine = pyttsx3.init('sapi5')  # Sapi5 is a Microsoft API
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[0].id)  # Set Male Voice
+engine.setProperty("rate", 178)
 
 
 def speak(audio):
@@ -24,15 +26,13 @@ def wishMe(ai="Jarvis"):
     Wish the user (Good Morning, Good evening...) according to time.
     Returns:
     """
+    speak(func.greetHelloInRandomLang())
     hour = int(datetime.datetime.now().hour)
     if 0 <= hour < 12:
         speak("Good Morning!")
 
     elif 12 <= hour < 18:
         speak("Good Evening!")
-
-    else:
-        speak("Good Night!")
 
     speak(f"I am {ai} Sir. Please tell me how may I help you!")
     return
@@ -103,7 +103,7 @@ def openProgram(program_name):
     pg.keyDown("enter")
 
 
-def wiki(query, no_of_sentences=2):
+def wiki(query, no_of_sentences=3):
     """
         search the query on wikipedia and tell out the summary in given (no_of_sentences) no of lines.
     """
@@ -123,28 +123,43 @@ def runQueries():
     while True:
         query = takeCommand().lower()
 
-        if query.startswith("jarvis"):
-            query.replace("jarvis", "")
-
-        if "open" in query:
-            openProgram(query)  # opening command using pyautogui
-
-        if "wikipedia" in query:
-            wiki(query)
-
-        if "echo mode on" in query or "eco mode on" in query:
-            echoMode()
+        if "jarvis" not in query and "alexa" not in query:
+            continue
 
         if "hello alexa" in query:
             engine.setProperty("voice", voices[1].id)
-            wishMe(ai="alexa")
+            query = query.replace("hello alexa", "")
 
-        if "hello jarvis" in query:
+        elif "hello jarvis" in query:
             engine.setProperty("voice", voices[0].id)
-            wishMe(ai="Jarvis")
+            query = query.replace("hello jarvis", "")
 
-        if "play" in query:
-            pass
+        if query.startswith("jarvis"):
+            query.replace("jarvis", "")
+
+        elif query.startswith("alexa"):
+            query.replace("alexa","")
+
+        if "great me" in query or "wish me" in query:
+            wishMe()
+
+        elif "open" in query:
+            openProgram(query)  # opening command using pyautogui
+
+        elif "wikipedia" in query:
+            wiki(query)
+
+        elif "echo mode on" in query or "eco mode on" in query:
+            echoMode()
+
+        elif "play" in query:
+            query = query.replace("play ", "")
+            print(query)
+            func.playMusicOnYoutube(query)
+
+        elif "screenshot" in query:
+            func.takeScreenShot("")
+            speak("ScreenShot is saved in Documents folder")
 
 
 if __name__ == '__main__':
