@@ -1,10 +1,12 @@
 import os
+import time
 import webbrowser
 from datetime import datetime
 import speech_recognition as sr
 from functions import offline_ops, online_ops, os_ops
 import utils
 import random
+import pyautogui as pg
 
 import pyttsx3
 from dotenv import load_dotenv
@@ -89,7 +91,9 @@ def openProgram(query):
     text = utils.opening_text[random.randrange(0,len(utils.opening_text))]
     speak(text)
     if "open youtube" in query:
-        webbrowser.open_new_tab("https://youtube.com")
+        speak('What do you want to play on Youtube, sir?')
+        data = takeCommand().lower()
+        online_ops.play_on_youtube(data)
 
     elif "open command prompt" in query or "open cmd" in query :
         os_ops.open_cmd()
@@ -97,5 +101,13 @@ def openProgram(query):
     elif "open camera" in query:
         os_ops.open_camera()
 
-    else :
-        find,err = os_ops
+    elif os_ops.open_path(query.replace("open ", "")):
+        pass
+
+    else:
+        pg.press('win')
+        time.sleep(0.2)
+        pg.write(query.replace('open ', ""))
+        time.sleep(0.2)
+        pg.press('enter')
+

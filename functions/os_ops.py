@@ -18,16 +18,16 @@ def open_path(app):
     If the application name is present in paths list then it will open it
     Returns:
         bool: application opened or not
-        err : if any error occurred
     """
     if app in paths.keys():
         try:
             os.startfile(paths[app])
         except Exception as e:
-            return False, e
-        return True,"NIL"
+            print(e)
+            return False
+        return True
 
-    return False, "NIL"
+    return False
 
 
 def open_cmd():
