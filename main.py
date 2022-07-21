@@ -1,9 +1,11 @@
+from datetime import datetime
 import time
 
 import requests
 
-from bot import wish_user,speak,takeCommand,BOT_NAME,USER_NAME,openProgram
-from functions import online_ops,os_ops,offline_ops
+from bot import wish_user, speak, takeCommand, BOT_NAME, USER_NAME, openProgram
+from functions import online_ops, os_ops, offline_ops
+
 if __name__ == '__main__':
     wish_user()
     while True:
@@ -38,7 +40,7 @@ if __name__ == '__main__':
             subject = takeCommand().capitalize()
             speak("What is the message sir?")
             message = takeCommand().capitalize()
-            if online_ops.send_email(receiver_address,subject,message):
+            if online_ops.send_email(receiver_address, subject, message):
                 speak("I've sent the email sir.")
             else:
                 speak("Something went wrong while I was sending the mail. Please check the error logs sir.")
@@ -55,12 +57,16 @@ if __name__ == '__main__':
             speak("Hope you like this one sir")
             joke = online_ops.get_random_joke()
             speak(joke)
-            # print(joke)
+            print(joke)
 
         elif "wikipedia" in query:
-            query = query.replace("wikipedia","")
+            query = query.replace("wikipedia", "")
             data = online_ops.wiki(query)
-            speak(data)
+            if data == "None":
+                speak("Sorry, but there is an Error printing it on Console")
+            else:
+                speak("According to wikipedia,")
+                speak(data)
 
         elif 'news' in query:
             speak(f"I'm reading out the latest news headlines, sir")
@@ -87,3 +93,10 @@ if __name__ == '__main__':
             data = takeCommand().capitalize()
             offline_ops.typeAnything(data)
 
+        elif f"bye" in query or "good night" in query:
+            hour = int(datetime.now().hour)
+            if 6 < hour <= 19:
+                speak("Bye Sir! Have a Good Day Sir.")
+            else:
+                speak("Good Night Sir!")
+            break

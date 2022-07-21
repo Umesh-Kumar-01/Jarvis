@@ -14,18 +14,15 @@ Jarvis is an interactive application that helps us to automate our work.
 ### Details to Add in .env file
 Create a .env file and add these lines 
 
+```
 USER=ranger
-
 BOT_NAME=JARVIS 
-
 EMAIL='xyz@gmail.com
-
 EMAIL_PASSWORD='xxxxxxx
-
 NEWS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
 WEATHER_APP_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+PATH_SCREENSHOT=x\\y\\z
+```
 Add your Gmail and Gmail password in the corresponding lines.
 You can find NEWS_API_KEY by signing up on https://newsapi.org/
 and WEATHER_APP_ID by signing up on this site:-https://openweathermap.org/.

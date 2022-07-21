@@ -1,15 +1,21 @@
+import os
 import time
 
 import pyautogui
-import numpy as np
-import cv2
+from dotenv import load_dotenv
+
+load_dotenv()
+
+PATH_SCREENSHOT = os.getenv("PATH_SCREENSHOT")
+screenshots = 1
 
 
 def takeScreenShot():
     try:
-        myScreenShot = pyautogui.screenshot()
-        image = cv2.cvtColor(np.array(myScreenShot), cv2.COLOR_RGB2BGR)
-        cv2.imwrite("image1.png", image)
+        global screenshots
+        myScreenshot = pyautogui.screenshot()
+        myScreenshot.save(str(PATH_SCREENSHOT)+f"{screenshots}.jpg")
+        screenshots += 1
     except Exception as e:
         print(e)
         return False

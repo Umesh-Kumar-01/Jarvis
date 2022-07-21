@@ -1,9 +1,8 @@
 import os
 import time
-import webbrowser
 from datetime import datetime
 import speech_recognition as sr
-from functions import offline_ops, online_ops, os_ops
+from functions import online_ops, os_ops
 import utils
 import random
 import pyautogui as pg
@@ -50,8 +49,7 @@ def wish_user():
     return
 
 
-def echoMode():
-    # speak what he listens
+def echoMode():    # speak what he listens
     speak("Echo Mode On!")
     query = takeCommand()
     while not "echo mode off" in query:

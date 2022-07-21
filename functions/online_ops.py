@@ -29,11 +29,15 @@ def wiki(query, no_of_sentences=3):
     """
         search the query on wikipedia and tell out the summary in given (no_of_sentences) no of lines.
     """
-    query = query.replace("wikipedia", "")
-    results = wikipedia.summary(query, no_of_sentences)
-    # speak("According to Wikipedia")
-    # speak(results)
-    return results
+    try:
+        query = query.replace("wikipedia", "")
+        results = wikipedia.summary(query, no_of_sentences)
+        # speak("According to Wikipedia")
+        # speak(results)
+        return results
+    except Exception as e:
+        print(e)
+    return "None"
 
 
 def find_link_youtube_video(data):
